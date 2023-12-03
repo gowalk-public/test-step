@@ -135,7 +135,10 @@ func main() {
 		APIKeyID:       cfg.APIKeyID,
 		APIKeyIssuerID: cfg.APIKeyIssuerID,
 	}
+	fmt.Println("Connection Inputs:", connectionInputs)
+	fmt.Println("Connection Inputs:", connection)
 	appleAuthCredentials, err := codesign.SelectConnectionCredentials(authType, connection, connectionInputs, logger)
+
 	if err != nil {
 		failf(err.Error())
 	}
