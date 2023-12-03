@@ -135,9 +135,11 @@ func main() {
 		APIKeyID:       cfg.APIKeyID,
 		APIKeyIssuerID: cfg.APIKeyIssuerID,
 	}
-	fmt.Println("Connection Inputs:", connectionInputs)
-	fmt.Println("Connection Inputs:", connection)
+	fmt.Println("Connection Inputs 1:", connectionInputs)
+	fmt.Println("Connection Inputs 2:", connection)
 	appleAuthCredentials, err := codesign.SelectConnectionCredentials(authType, connection, connectionInputs, logger)
+	fmt.Println("Connection Inputs 3:", connectionInputs)
+	fmt.Println("Connection Inputs 4:", connection)
 
 	if err != nil {
 		failf(err.Error())
@@ -148,8 +150,12 @@ func main() {
 		failf(fmt.Sprintf("failed to initialize keychain: %s", err))
 	}
 
+	fmt.Println("Connection Inputs 5:", connectionInputs)
+	fmt.Println("Connection Inputs 6:", connection)
+
 	devPortalClientFactory := devportalclient.NewFactory(logger)
 	certDownloader := certdownloader.NewDownloader(codesignConfig.CertificatesAndPassphrases, retry.NewHTTPClient().StandardClient())
+	fmt.Println("Contents of codesignConfig:", codesignConfig)
 	assetWriter := codesignasset.NewWriter(*keychain)
 	localCodesignAssetManager := localcodesignasset.NewManager(localcodesignasset.NewProvisioningProfileProvider(), localcodesignasset.NewProvisioningProfileConverter())
 
@@ -157,6 +163,11 @@ func main() {
 	if err != nil {
 		failf(err.Error())
 	}
+	fmt.Println("Contents of appleAuthCredentials:", appleAuthCredentials)
+	fmt.Println("Contents of cfg:", cfg)
+
+	fmt.Println("Connection Inputs 7:", connectionInputs)
+	fmt.Println("Connection Inputs 8:", connection)
 
 	fmt.Println()
 	logger.TDebugf("Downloading certificates")
@@ -165,6 +176,9 @@ func main() {
 		failf(err.Error())
 	}
 
+	fmt.Println("Connection Inputs 9:", connectionInputs)
+	fmt.Println("Connection Inputs 10:", connection)
+
 	typeToLocalCerts, err := autocodesign.GetValidLocalCertificates(certs)
 	if err != nil {
 		failf(err.Error())
@@ -172,7 +186,7 @@ func main() {
 
 	// Create codesign manager
 	manager := autocodesign.NewCodesignAssetManager(devPortalClient, assetWriter, localCodesignAssetManager)
-
+	fmt.Println("Contents of devPortalClient:", devPortalClient)
 	// Auto codesign
 	distribution := cfg.DistributionType()
 	var testDevices []devportalservice.TestDevice
