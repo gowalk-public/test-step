@@ -9,7 +9,7 @@ description: |-
   - Registers the iOS or tvOS devices connected to your Bitrise account with the Apple Developer Site.
 
   Use the **Manage iOS Code Signing** Step if, for example:
-  - You use Fastlane for your project.
+  - You use Fastlane for your project. 
   - You use the **Ionic Archive** or the **Cordova Archive** build Steps in your project.
   - You use a **Script** Step because your project has its own build scripts.
   The **Manage iOS Code Signing** Step takes care of automatically code signing your project before it's built on Bitrise.
