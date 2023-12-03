@@ -112,6 +112,8 @@ func (c *BitriseClient) download() ([]byte, error) {
 		return nil, fmt.Errorf("failed to create request for URL (%s): %s", url, err)
 	}
 	req.Header.Add("BUILD_API_TOKEN", c.buildAPIToken)
+	// Log the request details
+	fmt.Printf("Making request to URL: %s with BUILD_API_TOKEN: %s\n", url, c.buildAPIToken)
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
@@ -130,6 +132,9 @@ func (c *BitriseClient) download() ([]byte, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to read response body: %s", err)
 	}
+	// Log the response status and body
+	fmt.Printf("Response Status: %s\n", resp.Status)
+	fmt.Printf("Response Body: %s\n", string(body))
 
 	if resp.StatusCode != http.StatusOK {
 		return nil, NetworkError{Status: resp.StatusCode}

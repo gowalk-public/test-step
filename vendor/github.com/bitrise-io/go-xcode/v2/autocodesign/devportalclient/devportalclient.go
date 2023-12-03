@@ -36,10 +36,20 @@ func NewFactory(logger log.Logger) Factory {
 
 // CreateBitriseConnection ...
 func (f Factory) CreateBitriseConnection(buildURL, buildAPIToken string) (*devportalservice.AppleDeveloperConnection, error) {
+	// Print the input variables
+	fmt.Printf("buildURL: %s\n", buildURL)
+	fmt.Printf("buildAPIToken: %s\n", buildAPIToken)
+
 	f.logger.Println()
 	f.logger.Infof("Fetching Apple Service connection")
 	connectionProvider := devportalservice.NewBitriseClient(retry.NewHTTPClient().StandardClient(), buildURL, buildAPIToken)
 	conn, err := connectionProvider.GetAppleDeveloperConnection()
+
+	// Print the connection details
+	if conn != nil {
+		fmt.Printf("AppleDeveloperConnection: %+v\n", conn)
+	}
+
 	if err != nil {
 		if networkErr, ok := err.(devportalservice.NetworkError); ok && networkErr.Status == http.StatusUnauthorized {
 			f.logger.Println()
